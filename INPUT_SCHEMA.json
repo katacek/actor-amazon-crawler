@@ -17,7 +17,8 @@
         "FR",
         "IT",
         "IN",
-        "CA"
+        "CA",
+        "JP"
       ],
       "enumTitles": ["amazon.com",
         "amazon.co.uk",
@@ -26,28 +27,44 @@
         "amazon.fr",
         "amazon.it",
         "amazon.in",
-        "amazon.ca"]
+        "amazon.ca",
+        "amazon.co.jp"]
     },
 
     "keywords": {
-      "title": "Keywords",
-      "type": "array",
-      "description": "Keywords you would like to extract from Amazon",
-      "prefill": ["Iphone X", "Samsung monitor 27 QHD"],
-      "editor": "json"
+      "title": "Keywords to search",
+      "type": "string",
+      "description": "Keywords you would like to extract from Amazon, comma separated",
+      "prefill": "Iphone X,Samsung monitor 27 QHD",
+      "editor": "textarea"
     },
-    "liveView": {
-      "title": "LiveView",
-      "type": "boolean",
-      "description": "If you choose this option it will enable you to view what is happening in the crawler, but it will slow down the actor.",
-      "default": true,
-      "groupCaption": "Options",
-      "groupDescription": "If you choose this option it will enable you to view what is happening in the crawler, but it will slow down the actor."
+    "asins": {
+      "title": "ASINs to extract",
+      "type": "string",
+      "description": "Array of ASINs objects to extract, read description of the actor to understand this.",
+      "prefill": "B07HBC3CNF",
+      "editor": "textarea"
+    },
+      "directUrls": {
+          "title": "Direct urls",
+          "type": "string",
+          "description": "Array of request objects, that you neeed to scrape. Fill as many attributes as possible.",
+          "prefill": "https://www.amazon.de/gp/offer-listing/B07XRR7N5V/",
+          "editor": "textarea"
+      },
+    "maxResults": {
+      "title": "Number of results",
+      "type": "integer",
+      "description": "Number of results you would like to save in total.",
+      "default": 0,
+      "editor": "number"
+    },
+    "proxy":{
+        "title": "Proxy configuration",
+        "type": "object",
+        "description": "Select proxies to be used by your crawler.",
+        "prefill": { "useApifyProxy": true },
+        "editor": "proxy"
     }
-  },
-  "required": [
-    "country",
-    "keywords",
-    "liveView"
-  ]
+  }
 }
