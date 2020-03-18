@@ -47,6 +47,7 @@
           "countries":["de","it"]
       }],
       "editor": "json"
+      },
       "directUrls": {
           "title": "Direct urls",
           "type": "string",
