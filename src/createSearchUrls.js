@@ -53,7 +53,7 @@ async function createSearchUrls(input) {
             if (input.asins.indexOf(',').length !== -1) {
                 const asins = input.asins.split(',');
                 for (const asin of asins) {
-                    const sellerUrl = `${searchUrlBase}gp/offer-listing/${asin.replace(/\s+/g, '+').trim()}`;
+                    const sellerUrl = `${searchUrlBase}gp/offer-listing/${asin.trim()}`;
                     urlsToProcess.push({
                         url: sellerUrl,
                         userData: {
