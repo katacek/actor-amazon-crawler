@@ -40,13 +40,10 @@
     },
     "asins": {
       "title": "ASINs to extract",
-      "type": "array",
-      "description": "Array of ASINs objects to extract, read description of the actor to understand this.",
-      "prefill": [{
-          "asin":"B07HBC3CNF",
-          "countries":["de","it"]
-      }],
-      "editor": "json"
+      "type": "string",
+      "description": "ASINs to extract",
+      "prefill": "B07HBC3CNF",
+      "editor": "textarea"
       },
       "directUrls": {
           "title": "Direct urls",
