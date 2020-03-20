@@ -23,14 +23,14 @@ async function createSearchUrls(input) {
     let searchUrlBase;
     const urlsToProcess = [];
 
-    if (!input.country) {
-        throw new Error('Country required');
-    }
+    //if (!input.country) {
+    //    throw new Error('Country required');
+    //}
     if ((!input.keywords) && (!input.asins) && (!input.directUrls)) {
         throw new Error('Keywords/Asins required');
     }
 
-    if (input.asins) {
+    if ((input.asins) && (input.country)) {
         for (const item of input.asins) {
             for (const country of item.countries) {
                 searchUrlBase = getBaseUrl(country.toUpperCase());
@@ -47,6 +47,19 @@ async function createSearchUrls(input) {
                 });
             }
         }
+    }
+    else if ((input.asins) && (!input.country)) {
+        searchUrlBase = url;
+        const sellerUrl = `${searchUrlBase}gp/offer-listing/${item.asin}`;
+        urlsToProcess.push({
+            url: sellerUrl,
+            userData: {
+                label: 'seller',
+                asin: item.asin,
+                detailUrl: `${searchUrlBase}dp/${item.asin}`,
+                sellerUrl,
+            },
+        });
     }
 
     if (input.keywords) {
