@@ -23,15 +23,15 @@ async function createSearchUrls(input) {
     let searchUrlBase;
     const urlsToProcess = [];
 
-    //if (!input.country) {
-    //    throw new Error('Country required');
-    //}
+    if (!input.country) {
+        throw new Error('Country required');
+    }
     if ((!input.keywords) && (!input.asins) && (!input.directUrls)) {
         throw new Error('Keywords/Asins required');
     }
 
-    if ((input.asins) && (input.country)) {
-        for (const item of input.asins) {
+   if ((input.asins) && (input.asins.countries)){
+        for (const item of input.asins) 
             for (const country of item.countries) {
                 searchUrlBase = getBaseUrl(country.toUpperCase());
                 const sellerUrl = `${searchUrlBase}gp/offer-listing/${item.asin}`;
@@ -47,21 +47,38 @@ async function createSearchUrls(input) {
                 });
             }
         }
+    else if ((input.asins) && (!input.asins.countries)){
+        searchUrlBase = getBaseUrl(input.country);
+        if (input.asins.length !== 0) {
+            if (input.asins.indexOf(',').length !== -1) {
+                const asins = input.asins.split(',');
+                for (const asin of asins) {
+                    const sellerUrl = `${searchUrlBase}gp/offer-listing/${asin.replace(/\s+/g, '+').trim()}`;
+                    urlsToProcess.push({
+                        url: sellerUrl,
+                        userData: {
+                            label: 'seller',
+                            asin: asin,
+                            detailUrl: `${searchUrlBase}dp/${asin}`,
+                            sellerUrl,
+                        },
+                    });
+                }
+            } else {
+                const sellerUrl = `${searchUrlBase}gp/offer-listing/${input.asins}`;
+                    urlsToProcess.push({
+                        url: sellerUrl,
+                        userData: {
+                            label: 'seller',
+                            asin: input.asins,
+                            detailUrl: `${searchUrlBase}dp/${input.asins}`,
+                            sellerUrl,
+                        },
+                    });
+            }
+        }
     }
-    else if ((input.asins) && (!input.country)) {
-        searchUrlBase = url;
-        const sellerUrl = `${searchUrlBase}gp/offer-listing/${item.asin}`;
-        urlsToProcess.push({
-            url: sellerUrl,
-            userData: {
-                label: 'seller',
-                asin: item.asin,
-                detailUrl: `${searchUrlBase}dp/${item.asin}`,
-                sellerUrl,
-            },
-        });
-    }
-
+    
     if (input.keywords) {
         searchUrlBase = getBaseUrl(input.country);
         if (input.keywords.length !== 0) {
